@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Forge Covenant Governance Dashboard (Enhanced)</title>
+    <title>QUANTUM PI FORGE: GENESIS LAUNCH</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -299,25 +299,21 @@
     <script>
         // --- Countdown Logic (Conceptual Timer) ---
         function updateCountdown() {
-            // Set a conceptual "Solstice" date far in the future (e.g., 20 days from now, simulating a cycle)
-            const cycleDurationDays = 20;
-            const msInDay = 86400000;
-            
-            // Start time (for consistent cycling)
-            const startTime = new Date('2025-12-08T00:00:00Z').getTime();
+            // Target date: December 17, 2025 23:59:59 UTC (GENESIS LAUNCH)
+            const targetTime = new Date('2025-12-17T23:59:59Z').getTime();
             const now = new Date().getTime();
             
-            // Calculate time elapsed since start
-            const elapsed = now - startTime;
-            
-            // Calculate total milliseconds in the cycle
-            const cycleMs = cycleDurationDays * msInDay;
-            
-            // Calculate remaining time until the next cycle completion
-            const remainingMs = cycleMs - (elapsed % cycleMs);
+            // Calculate remaining time until launch
+            const remainingMs = targetTime - now;
 
-            if (remainingMs < 0) return; // Should not happen with modulo
+            if (remainingMs < 0) {
+                // Launch has occurred
+                const countdownElement = document.getElementById('countdown');
+                countdownElement.innerHTML = '00:D 00:H 00:M 00:S';
+                return;
+            }
 
+            const msInDay = 86400000;
             const days = Math.floor(remainingMs / msInDay);
             const hours = Math.floor((remainingMs % msInDay) / (1000 * 60 * 60));
             const minutes = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
