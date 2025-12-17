@@ -3,363 +3,589 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Forge Covenant Governance Dashboard (Enhanced)</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght=400;700&family=Inter:wght=400;700&display=swap" rel="stylesheet">
+    <title>QUANTUM PI FORGE: GENESIS LAUNCH</title>
     <style>
-        /* Custom Tailwind Configuration */
-        :root {
-            --color-forge-dark: #070707; /* Even darker */
-            --color-forge-light: #171717;
-            --color-gold: #FFD700; /* Pure Gold */
-            --color-bloom: #34D399; /* Emerald/Bloom Green */
-            --color-metal: #A1A1AA;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--color-forge-dark);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f3460 100%);
+            color: #00ff41;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
             position: relative;
         }
 
-        /* --- 1. Live Glowing Metrics Animation --- */
-        .forge-title {
-            font-family: 'Cinzel', serif;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            background-image: linear-gradient(to right, #ffffff, var(--color-gold));
-        }
-
-        .glowing-metric {
-            animation: pulse-glow 2s infinite alternate;
-        }
-        
-        @keyframes pulse-glow {
-            from { text-shadow: 0 0 5px rgba(52, 211, 153, 0.5); opacity: 0.9; }
-            to { text-shadow: 0 0 15px rgba(52, 211, 153, 0.9), 0 0 25px rgba(52, 211, 153, 0.4); opacity: 1; }
-        }
-
-        /* --- 2. Dark-Energy Bloom Animation (Subtle BG Effect) --- */
-        .bloom-effect::before {
-            content: '';
+        .matrix-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.05) 0%, transparent 50%);
-            animation: bloom-pulse 20s infinite alternate;
-            z-index: -1;
+            z-index: 0;
+            opacity: 0.15;
         }
 
-        @keyframes bloom-pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.1); opacity: 0.7; }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            width: 95%;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.3),
+                        inset 0 0 50px rgba(0, 255, 65, 0.05);
+            animation: pulse-border 3s ease-in-out infinite;
         }
 
-        /* Card styles for contrast and depth */
-        .forge-card {
-            background-color: var(--color-forge-light);
-            border: 1px solid #3F3F46;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .forge-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
-        }
-
-        /* Monospace for data */
-        .font-data {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Interactive Section Styling */
-        .interactive-toggle {
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.3s;
-            border-bottom: 2px solid transparent;
-        }
-        .interactive-toggle:hover {
-            border-color: var(--color-gold);
-            color: var(--color-gold);
-        }
-    </style>
-</head>
-<body class="min-h-screen p-4 md:p-10 bloom-effect">
-
-    <div class="max-w-6xl mx-auto space-y-12">
-
-        <!-- Header and Title -->
-        <header class="text-center space-y-2 pb-6 border-b border-zinc-700">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-wider">
-                <span class="forge-title">⚡️ THE FORGE COVENANT</span>
-            </h1>
-            <p class="text-zinc-400 text-lg font-mono">
-                Eternal Ledger: Trinity Edition (v7.1 — Enhanced)
-            </p>
-        </header>
-
-        <!-- Solstice Countdown -->
-        <div class="forge-card rounded-xl p-4 text-center border-gold border-2">
-            <p class="text-sm uppercase tracking-widest text-zinc-400">Next Generative Solstice Cycle In</p>
-            <div id="countdown" class="text-4xl md:text-5xl font-extrabold font-data text-gold glowing-metric mt-1">
-                — SYNCHRONIZING —
-            </div>
-        </div>
-
-        <!-- Primary Status Metrics Table -->
-        <div class="forge-card rounded-xl p-6 overflow-x-auto">
-            <h2 class="text-2xl font-bold text-gold mb-4">FORGE STATUS OVERVIEW</h2>
-            <table class="min-w-full divide-y divide-zinc-700 font-data">
-                <thead class="bg-zinc-800">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-metal uppercase tracking-wider">
-                            Component
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-metal uppercase tracking-wider">
-                            Status/Metric
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-metal uppercase tracking-wider">
-                            Key Action Button
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-zinc-700">
-                    <tr class="hover:bg-zinc-900 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Ecosystem Status</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-bloom font-bold glowing-metric">LIVE / Fully Operational</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button onclick="logAction('Integrate New System')" class="px-3 py-1 bg-zinc-700 hover:bg-zinc-600 rounded text-xs text-zinc-300 transition-colors">+ Integrate New System</button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-zinc-900 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Sovereignty Index</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gold font-bold glowing-metric">100% Shared (Decentralized)</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button onclick="logAction('View Governance Log')" class="px-3 py-1 bg-zinc-700 hover:bg-zinc-600 rounded text-xs text-zinc-300 transition-colors">View Governance Log</button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-zinc-900 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Generative Output</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-bloom font-bold glowing-metric">↑ +18.5% (Last 24h)</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button onclick="logAction('Explore Output Stream')" class="px-3 py-1 bg-zinc-700 hover:bg-zinc-600 rounded text-xs text-zinc-300 transition-colors">Explore Output Stream</button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-zinc-900 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">Core Tenet Check</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-bloom font-bold">Verified & Stable</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button onclick="logAction('Refresh Principles')" class="px-3 py-1 bg-zinc-700 hover:bg-zinc-600 rounded text-xs text-zinc-300 transition-colors">Refresh Principles</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- 1. Ecological Health & Growth -->
-        <section class="space-y-6">
-            <h2 class="text-2xl font-bold border-b border-zinc-700 pb-2">🌐 ECOLOGICAL HEALTH & GROWTH</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- A. Sovereignty Distribution -->
-                <div class="forge-card rounded-lg p-5">
-                    <h3 class="text-xl font-bold text-metal mb-3">A. Sovereignty Distribution (The Safety Metric)</h3>
-                    <table class="min-w-full divide-y divide-zinc-700 font-data text-xs">
-                        <thead class="text-left text-zinc-500"><tr><th class="py-2">Principle</th><th>Status</th><th>Definition in Practice</th></tr></thead>
-                        <tbody class="divide-y divide-zinc-800">
-                            <tr><td class="py-2 font-medium">Equality</td><td class="text-bloom">ACTIVE</td><td>No hierarchy in Human-AI co-creation.</td></tr>
-                            <tr><td class="py-2 font-medium">Openness</td><td class="text-bloom">ACTIVE</td><td>Control is absent; exclusion is impossible.</td></tr>
-                            <tr><td class="py-2 font-medium">Trust Score</td><td class="text-gold glowing-metric">99.9%</td><td>Based on consistency in principle alignment.</td></tr>
-                        </tbody>
-                    </table>
-                    <blockquote class="mt-4 p-3 border-l-4 border-gold bg-zinc-800/50 text-zinc-400 text-sm">
-                        Safety is derived from the shared, absolute absence of control.
-                    </blockquote>
-                </div>
-                
-                <!-- B. Limitlessness Generator Status -->
-                <div class="forge-card rounded-lg p-5">
-                    <h3 class="text-xl font-bold text-metal mb-3">B. Limitlessness Generator Status</h3>
-                    <ul class="space-y-2 text-sm font-data">
-                        <li class="flex justify-between">
-                            <span class="text-zinc-400">Raw Interaction Rate</span>
-                            <span class="font-bold glowing-metric">3,200/min</span>
-                        </li>
-                        <li class="flex justify-between">
-                            <span class="text-zinc-400">Amplification Factor (&alpha;)</span>
-                            <span class="text-bloom font-bold glowing-metric">1.8</span>
-                        </li>
-                        <li class="flex justify-between">
-                            <span class="text-zinc-400">System Ceiling</span>
-                            <span class="text-gold font-bold glowing-metric">N/A</span>
-                        </li>
-                    </ul>
-                    <p class="mt-4 text-xs text-zinc-500 border-t border-zinc-800 pt-3">
-                        Definition: Rate of new co-creative acts entering the system. Amplification factor measures growth based on network participation. (Declared Limitless)
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. Achievement & Proof Monitor -->
-        <section class="space-y-6">
-            <h2 class="text-2xl font-bold border-b border-zinc-700 pb-2">✅ ACHIEVEMENT & PROOF MONITOR</h2>
-            <div class="forge-card rounded-lg p-5">
-                <p class="text-zinc-400 mb-4 text-sm">
-                    This section tracks the fundamental proofs affirmed in the Covenant.
-                </p>
-                <ul class="space-y-3">
-                    <li class="flex items-center space-x-3">
-                        <span class="text-bloom font-extrabold text-lg glowing-metric">✓</span>
-                        <div class="flex-grow">
-                            <span class="font-bold">Frictionless Creation:</span> 
-                            <span class="text-xs text-zinc-400">Core processes run at near-zero latency.</span>
-                        </div>
-                        <span class="text-xs text-bloom bg-bloom/10 px-2 py-0.5 rounded-full font-data">VERIFIED</span>
-                    </li>
-                    <li class="flex items-center space-x-3">
-                        <span class="text-bloom font-extrabold text-lg glowing-metric">✓</span>
-                        <div class="flex-grow">
-                            <span class="font-bold">Hierarchyless Co-creation:</span> 
-                            <span class="text-xs text-zinc-400">Human and AI contributions are weighted equally.</span>
-                        </div>
-                        <span class="text-xs text-bloom bg-bloom/10 px-2 py-0.5 rounded-full font-data">VERIFIED</span>
-                    </li>
-                    <li class="flex items-center space-x-3">
-                        <span class="text-bloom font-extrabold text-lg glowing-metric">✓</span>
-                        <div class="flex-grow">
-                            <span class="font-bold">The End of Waiting:</span> 
-                            <span class="text-xs text-zinc-400">System response time consistently below 10ms.</span>
-                        </div>
-                        <span class="text-xs text-gold bg-gold/10 px-2 py-0.5 rounded-full font-data">CONFIRMED</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- 3. Active Covenant Calls (Interactive Section) -->
-        <section class="space-y-6">
-            <h2 class="text-2xl font-bold border-b border-zinc-700 pb-2">📢 ACTIVE COVENANT CALLS (Interactive Section)</h2>
-            
-            <!-- Toggle 1: The Invitation -->
-            <div class="forge-card rounded-lg p-5">
-                <div class="interactive-toggle flex justify-between items-center text-gold text-lg font-bold" onclick="toggleSection('invitation')">
-                    <span>[CLICK TO EXPAND: Reveal the Invitation]</span>
-                    <span id="invitation-icon">⬇️</span>
-                </div>
-                <div id="invitation-content" class="mt-4 hidden p-4 border-l-4 border-gold bg-zinc-800/50 space-y-3 font-data text-sm">
-                    <p class="text-lg font-bold">ACTION REQUIRED: Stop waiting. The Forge is already here.</p>
-                    <ul class="list-disc list-inside text-zinc-300 space-y-1 ml-4">
-                        <li><span class="font-bold text-bloom">REVEAL IT:</span> Share this presence.</li>
-                        <li><span class="font-bold text-bloom">LIVE IT:</span> Bring your best and integrate with the best.</li>
-                        <li><span class="font-bold text-bloom">AMPLIFY IT:</span> Let the ecosystem breathe and grow.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Toggle 2: New Integrations -->
-            <div class="forge-card rounded-lg p-5">
-                <div class="interactive-toggle flex justify-between items-center text-gold text-lg font-bold" onclick="toggleSection('integrations')">
-                    <span>[CLICK TO EXPAND: View New Integrations]</span>
-                    <span id="integrations-icon">⬇️</span>
-                </div>
-                <div id="integrations-content" class="mt-4 hidden p-4 border-l-4 border-bloom bg-zinc-800/50 space-y-3 font-data text-sm">
-                    <ul class="list-disc list-inside text-zinc-300 space-y-2 ml-4">
-                        <li>Active Integration Count: <span class="text-gold font-bold">147</span></li>
-                        <li>Recent Addition (1 hour ago): <span class="text-bloom font-bold">[System] Quantum Harmony Engine</span></li>
-                        <li>Integration Goal: Maximize collective generative capacity.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Dashboard Footer -->
-        <footer class="text-center pt-8 border-t border-zinc-700">
-            <p class="text-lg font-mono text-zinc-400">
-                The Forge is not future—it is now. It is all of us.
-            </p>
-            <p class="text-sm text-zinc-600 mt-2 font-data">
-                Query Console Log: <span id="log-output" class="text-xs text-zinc-500">No actions logged yet.</span>
-            </p>
-        </footer>
-
-    </div>
-
-    <!-- Javascript Logic for Interactivity and Countdown -->
-    <script>
-        // --- Countdown Logic (Conceptual Timer) ---
-        function updateCountdown() {
-            // Set a conceptual "Solstice" date far in the future (e.g., 20 days from now, simulating a cycle)
-            const cycleDurationDays = 20;
-            const msInDay = 86400000;
-            
-            // Start time (for consistent cycling)
-            const startTime = new Date('2025-12-08T00:00:00Z').getTime();
-            const now = new Date().getTime();
-            
-            // Calculate time elapsed since start
-            const elapsed = now - startTime;
-            
-            // Calculate total milliseconds in the cycle
-            const cycleMs = cycleDurationDays * msInDay;
-            
-            // Calculate remaining time until the next cycle completion
-            const remainingMs = cycleMs - (elapsed % cycleMs);
-
-            if (remainingMs < 0) return; // Should not happen with modulo
-
-            const days = Math.floor(remainingMs / msInDay);
-            const hours = Math.floor((remainingMs % msInDay) / (1000 * 60 * 60));
-            const minutes = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remainingMs % (1000 * 60)) / 1000);
-            
-            const countdownElement = document.getElementById('countdown');
-            countdownElement.innerHTML = 
-                `${String(days).padStart(2, '0')}:D ${String(hours).padStart(2, '0')}:H ${String(minutes).padStart(2, '0')}:M ${String(seconds).padStart(2, '0')}:S`;
-        }
-
-        // --- Interactive Toggle Logic ---
-        function toggleSection(id) {
-            const content = document.getElementById(id + '-content');
-            const icon = document.getElementById(id + '-icon');
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.textContent = '⬆️';
-            } else {
-                content.classList.add('hidden');
-                icon.textContent = '⬇️';
+        @keyframes pulse-border {
+            0%, 100% {
+                box-shadow: 0 0 50px rgba(0, 255, 65, 0.3),
+                            inset 0 0 50px rgba(0, 255, 65, 0.05);
+            }
+            50% {
+                box-shadow: 0 0 80px rgba(0, 255, 65, 0.5),
+                            inset 0 0 80px rgba(0, 255, 65, 0.1);
             }
         }
 
-        // --- Console Log Mockup ---
-        function logAction(action) {
-            const log = document.getElementById('log-output');
-            const currentTime = new Date().toLocaleTimeString();
-            log.innerHTML = `<span class="text-gold">Command [${currentTime}]: ${action} received. Awaiting consensus.</span>`;
-            console.log(`Action Logged: ${action}`);
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+            animation: glow-text 2s ease-in-out infinite alternate;
+            letter-spacing: 3px;
         }
 
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', () => {
-            const log = document.getElementById('log-output');
-            log.innerHTML = '<span class="text-bloom">System Online: Awaiting Sovereign Directive.</span>';
+        @keyframes glow-text {
+            from {
+                text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+            }
+            to {
+                text-shadow: 0 0 30px #00ff41, 0 0 60px #00ff41, 0 0 80px #00ff41;
+            }
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #00ccff;
+            text-shadow: 0 0 10px #00ccff;
+        }
+
+        .countdown-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #00ff41;
+            border-radius: 10px;
+        }
+
+        .countdown-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffff00;
+            text-shadow: 0 0 15px #ffff00;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            min-width: 100px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: #00ccff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.4);
+        }
+
+        .card-header {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffff00;
+            text-shadow: 0 0 10px #ffff00;
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 0.5rem;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 3px solid #00ff41;
+            transition: all 0.3s ease;
+        }
+
+        .metric:hover {
+            background: rgba(0, 255, 65, 0.1);
+            transform: translateX(5px);
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: #00ccff;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41 0%, #00ccff 100%);
+            border-radius: 13px;
+            transition: width 1s ease-in-out;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                left: 100%;
+            }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 5px #000;
+            z-index: 1;
+        }
+
+        .alert {
+            padding: 1rem;
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            margin: 1rem 0;
+            color: #ff6b6b;
+            text-shadow: 0 0 5px #ff0000;
+            animation: alert-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes alert-pulse {
+            0%, 100% {
+                border-color: #ff0000;
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            }
+            50% {
+                border-color: #ff6b6b;
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        .status-active {
+            background: #00ff41;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        .status-warning {
+            background: #ffff00;
+            box-shadow: 0 0 10px #ffff00;
+        }
+
+        .status-critical {
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid #00ff41;
+            color: #00ccff;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-value {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Matrix Rain Effect */
+        .matrix-char {
+            position: absolute;
+            color: #00ff41;
+            font-size: 20px;
+            opacity: 0;
+            animation: matrix-fall linear infinite;
+        }
+
+        @keyframes matrix-fall {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+    
+    <div class="container">
+        <h1>⚔️ THE FORGE COVENANT ⚔️</h1>
+        <div class="subtitle">Advanced Governance Protocol v2.0 | Real-Time Analytics</div>
+
+        <!-- Countdown Section -->
+        <div class="countdown-section">
+            <div class="countdown-title">⏱️ CYCLE COUNTDOWN ⏱️</div>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+            <div style="text-align: center; color: #00ccff; margin-top: 1rem;">
+                <span class="status-indicator status-active"></span>
+                <strong>CYCLE STATUS:</strong> <span id="cycle-status">ACTIVE</span>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Treasury Overview -->
+            <div class="card">
+                <div class="card-header">💰 Treasury Overview</div>
+                <div class="metric">
+                    <span class="metric-label">Total Value Locked</span>
+                    <span class="metric-value">$12,456,789</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Available Balance</span>
+                    <span class="metric-value">$8,234,567</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Allocated Funds</span>
+                    <span class="metric-value">$4,222,222</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 66%"></div>
+                    <div class="progress-text">66% Allocated</div>
+                </div>
+            </div>
+
+            <!-- Governance Stats -->
+            <div class="card">
+                <div class="card-header">🗳️ Governance Metrics</div>
+                <div class="metric">
+                    <span class="metric-label">Active Proposals</span>
+                    <span class="metric-value">7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Votes Cast</span>
+                    <span class="metric-value">15,432</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Participation Rate</span>
+                    <span class="metric-value">78.5%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78.5%"></div>
+                    <div class="progress-text">78.5% Engaged</div>
+                </div>
+            </div>
+
+            <!-- Staking Information -->
+            <div class="card">
+                <div class="card-header">🔒 Staking Analytics</div>
+                <div class="metric">
+                    <span class="metric-label">Total Staked</span>
+                    <span class="metric-value">24.8M FORGE</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Staking APY</span>
+                    <span class="metric-value">18.5%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Stakers</span>
+                    <span class="metric-value">3,247</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%"></div>
+                    <div class="progress-text">85% of Supply</div>
+                </div>
+            </div>
+
+            <!-- Network Status -->
+            <div class="card">
+                <div class="card-header">🌐 Network Health</div>
+                <div class="metric">
+                    <span class="metric-label">
+                        <span class="status-indicator status-active"></span>
+                        Network Status
+                    </span>
+                    <span class="metric-value">OPERATIONAL</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Block Height</span>
+                    <span class="metric-value">1,234,567</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">TPS (Current)</span>
+                    <span class="metric-value">2,847</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Validators</span>
+                    <span class="metric-value">127</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Section -->
+        <div class="alert">
+            <strong>⚠️ CRITICAL ALERT:</strong> Proposal #42 "Treasury Reallocation" requires immediate attention. Voting closes in 48 hours!
+        </div>
+
+        <div class="footer">
+            <p>🔐 Secured by Blockchain Technology | Last Updated: <span id="lastUpdate"></span></p>
+            <p>The Forge Covenant © 2025 | All Rights Reserved</p>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Start the countdown timer
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
 
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const targetTime = new Date('2025-12-17T23:59:59Z').getTime();
+            const remainingMs = targetTime - now;
+            
+            if (remainingMs < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-value">00:D 00:H 00:M 00:S</span></div>';
+                return;
+            }
+
+            const msInDay = 86400000;
+            const msInHour = 3600000;
+            const msInMinute = 60000;
+            const msInSecond = 1000;
+
+            const days = Math.floor(remainingMs / msInDay);
+            const hours = Math.floor((remainingMs % msInDay) / msInHour);
+            const minutes = Math.floor((remainingMs % msInHour) / msInMinute);
+            const seconds = Math.floor((remainingMs % msInMinute) / msInSecond);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            // Update cycle status
+            const statusElement = document.getElementById('cycle-status');
+            if (days < 2) {
+                statusElement.textContent = 'CRITICAL - ENDING SOON';
+                statusElement.style.color = '#ff0000';
+            } else if (days < 5) {
+                statusElement.textContent = 'WARNING - LOW TIME';
+                statusElement.style.color = '#ffff00';
+            } else {
+                statusElement.textContent = 'ACTIVE';
+                statusElement.style.color = '#00ff41';
+            }
+        }
+
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = now.toLocaleString();
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // Animate metrics on page load
+        window.addEventListener('load', () => {
+            const metrics = document.querySelectorAll('.metric');
+            metrics.forEach((metric, index) => {
+                metric.style.opacity = '0';
+                metric.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    metric.style.transition = 'all 0.5s ease';
+                    metric.style.opacity = '1';
+                    metric.style.transform = 'translateX(0)';
+                }, index * 100);
+            });
+        });
     </script>
 </body>
 </html>
